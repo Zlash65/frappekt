@@ -136,8 +136,7 @@ class FrappeClient(ctx: Context){
     }
 
     fun retrieveDocTypeMeta(editor: SharedPreferences.Editor, key: String, doctype: String?) {
-
-        val request = OAuthRequest(Verb.GET, "${getServerURL()}/api/method/frappe.client.get_meta?doctype=${doctype}")
+        val request = OAuthRequest(Verb.GET, "${getServerURL()}/api/method/agrinext.api.get_meta?doctype=${doctype}")
         val callback = object: AuthReqCallback {
             override fun onSuccessResponse(result: String) {
                 val doctypeMetaJson = JSONObject(result).getJSONObject("message")

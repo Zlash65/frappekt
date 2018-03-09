@@ -49,6 +49,7 @@ open class ListingFragment : Fragment(), View.OnClickListener {
     var doctypeMetaJson = JSONObject()
     var swipeRefresh: SwipeRefreshLayout? = null
     var form: Class<Any>? = null
+    val mLayoutManager = LinearLayoutManager(activity)
 
     companion object {
         val DOCTYPE_META = "DOCTYPE_META"
@@ -62,7 +63,7 @@ open class ListingFragment : Fragment(), View.OnClickListener {
         var itemPosition = mRecyclerView.getChildLayoutPosition(view)
         var value = JSONObject(recyclerModels.get(itemPosition).toString()).get("name")
         if (form == null) {
-            form = FormGeneratorActivity.javaClass
+            form = FormGeneratorActivity::class.java as Class<Any>?
         }
         var intent = Intent(activity, form)
         intent.putExtra("DocType", this.doctype)
@@ -90,7 +91,6 @@ open class ListingFragment : Fragment(), View.OnClickListener {
 
         setupSwipeRefresh()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_view, menu)
@@ -261,8 +261,6 @@ open class ListingFragment : Fragment(), View.OnClickListener {
     }
 
     fun setRecycleViewScrollListener() {
-        // use a linear layout manager
-        val mLayoutManager = LinearLayoutManager(activity)
         mRecyclerView.setLayoutManager(mLayoutManager)
 
         mRecyclerView.addOnScrollListener(object: EndlessRecyclerViewScrollListener(mLayoutManager){

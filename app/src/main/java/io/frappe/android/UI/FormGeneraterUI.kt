@@ -37,7 +37,7 @@ class FormGeneraterUI(docField: DocField): AnkoComponent<ViewGroup> {
 
                         editText {
                             id = Ids.fieldValue
-                            setText(docMeta.value as String)
+                            setText("Fieldalue")
                             textSize = dip(8).toFloat()
                             backgroundResource = android.R.color.transparent
                         }.lparams(width = dip(0)) {
