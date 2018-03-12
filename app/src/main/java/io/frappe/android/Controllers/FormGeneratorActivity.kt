@@ -1,5 +1,6 @@
 package io.frappe.android.Controllers
 
+import android.accounts.AccountManager
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -166,11 +167,14 @@ open class FormGeneratorActivity : BaseCompatActivity() {
     }
 
     // callback for fetching docData
-    val setupCallback: (JSONObject) -> Unit = {
-        data -> run {
+    val setupCallback: (JSONObject) -> Unit = { data ->
+        run {
             docData = data
             this.findViewById<TextView>(R.id.docname).setText(docname)
-            if (FormUtils(this).isOwner("zarrar@erpnext.com")) edit.isVisible = true
+            val mAccountManager = AccountManager.get(this.applicationContext)
+            val accounts = mAccountManager?.getAccountsByType(applicationContext.getString(R.string.package_name))
+            val user = accounts?.get(0)?.name
+            if (FormUtils(this).isOwner(user!!)) edit.isVisible = true
             this.viewIterator()
         }
     }
